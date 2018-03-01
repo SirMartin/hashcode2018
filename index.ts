@@ -40,9 +40,12 @@ sortRidesByDistance(rides);
 console.log("Data read and parsed in " + (-time + (time = Date.now())) + "ms");
 
 var vehicles: vehicle[] = [];
-for (var i = 0; i < theCity.numVehicles; i++)
-    vehicles.push(new vehicle());
+for (var i = 0; i < theCity.numVehicles; i++) {
+    vehicles.push(new vehicle(i));
+}
 
+// Start simulation
+simulate(theCity, vehicles, rides);
 
 console.log("Creating output");
 time = Date.now();
@@ -64,10 +67,10 @@ function sortRidesByDistance(rides: ride[]) {
         ride.distance = Math.abs(ride.start.x - ride.end.y) + Math.abs(ride.end.x - ride.end.y);
     });
 
-    rides.sort((a,b) => {
-        if(a.distance < b.distance) {
+    rides.sort((a, b) => {
+        if (a.distance < b.distance) {
             return -1;
-        } else if(a.distance > b.distance) {
+        } else if (a.distance > b.distance) {
             return 1;
         } else {
             return 0;
@@ -81,20 +84,20 @@ function getDistance(a: coordinate, b: coordinate) {
 
 function getTheBestRide(position: coordinate, actualStep: number): ride {
     //Position es la position del coche
-
     let ridesToDo = rides.filter(ride => {
-        ride.done === false && ((actualStep + ride.distance) <= ride.latestFinish)});
-    
+        return ride.done === false && ((actualStep + ride.distance) <= ride.latestFinish)
+    });
+
     let arrRides = [];
+
     ridesToDo.forEach(ride => {
         const f = ride.getCost(position, actualStep);
         arrRides.push(f);
     });
-    
+
     var index = arrRides.indexOf(Math.min(...arrRides));
+    console.log("index", index);
     return ridesToDo[index];
-    
-    
 }
 
 function simulate(theCity: city, vehicles: vehicle[], rides: ride[]) {
@@ -102,12 +105,16 @@ function simulate(theCity: city, vehicles: vehicle[], rides: ride[]) {
         for (var j = 0; j < vehicles.length; j++) {
             const v = vehicles[j];
             if (v.isFree) {
+                console.log("COCHE " + j " LIBRE");
                 var selectedRide = getTheBestRide(v.position, i);
-                v.setRide(selectedRide);
+                if (selectedRide) {
+                    console.log("selectedRide", selectedRide);
+                    v.setRide(selectedRide);
+                }
             }
 
             // Move each step.
-            v.move();
+            v.move(i);
         }
     }
 }
