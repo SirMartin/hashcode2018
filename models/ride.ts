@@ -17,5 +17,13 @@ export class ride{
         this.latestFinish = f;
     }
 
+    getCost = (position: coordinate, actualStep: number) : number => {
+        return this.getDistance(position, this.start) + ((actualStep < this.earlyStart) ? this.earlyStart - actualStep : 0);
+    }
+
+    getDistance = (a: coordinate, b: coordinate) : number => {
+        return Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
+    }
+
     
 }
