@@ -21,6 +21,10 @@ export class ride{
         return this.getDistance(position, this.start) + ((actualStep < this.earlyStart) ? this.earlyStart - actualStep : 0);
     }
 
+    hasBonus = (position: coordinate, actualStep: number) : boolean => {
+        return (actualStep - this.earlyStart) >= this.getDistance(position, this.start);
+    }
+
     getDistance = (a: coordinate, b: coordinate) : number => {
         return Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
     }

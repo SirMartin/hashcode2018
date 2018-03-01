@@ -51,7 +51,7 @@ console.log("Starting simulation");
 // Start simulation
 simulate(theCity, vehicles, rides);
 
-console.log("Simulation done " + (-time + (time = Date.now())) + "ms");
+console.log("Simulation done in " + (-time + (time = Date.now())) + "ms");
 
 console.log("Creating output");
 time = Date.now();
@@ -98,7 +98,8 @@ function getTheBestRide(position: coordinate, actualStep: number): ride {
 
     ridesToDo.forEach(ride => {
         const f = ride.getCost(position, actualStep);
-        arrRides.push(f);
+        const b = ride.hasBonus(position, actualStep) ? theCity.bonusOnTime : 0;
+        arrRides.push(f - b);
     });
 
     var index = arrRides.indexOf(Math.min(...arrRides));
@@ -110,7 +111,6 @@ function simulate(theCity: city, vehicles: vehicle[], rides: ride[]) {
         for (var j = 0; j < vehicles.length; j++) {
             const v = vehicles[j];
             if (v.isFree && vehiclesFinished.indexOf(v.id) === -1) {
-                console.log("STEP " + i + " - COCHE " + j + " LIBRE");
                 var selectedRide = getTheBestRide(v.position, i);
                 if (selectedRide) {
                     v.setRide(selectedRide);
