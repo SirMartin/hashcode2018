@@ -1,6 +1,7 @@
 var fs: any = require("fs");
-import { city } from "./models/city";
+
 import { ride } from "./models/ride";
+import { city } from "./models/city";
 import { vehicle } from "./models/vehicle";
 import { coordinate } from "./models/coordinate";
 
@@ -36,8 +37,6 @@ for (var i = 0; i < rows.length; i++) {
 
 sortRidesByDistance(rides);
 
-//const data = rows.map(d => d.split("").map(e => e === "T"));
-//console.log(data);
 console.log("Data read and parsed in " + (-time + (time = Date.now())) + "ms");
 
 var vehicles: vehicle[] = [];
