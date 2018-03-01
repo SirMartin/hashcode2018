@@ -31,12 +31,11 @@
         var d = rows[0].split(/\s/g);
         rides.push(new ride_1.ride(i, parseInt(d[0]), parseInt(d[1]), parseInt(d[2]), parseInt(d[3]), parseInt(d[4]), parseInt(d[5])));
     }
-    //const data = rows.map(d => d.split("").map(e => e === "T"));
-    //console.log(data);
     console.log("Data read and parsed in " + (-time + (time = Date.now())) + "ms");
     var vehicles = [];
     for (var i = 0; i < theCity.numVehicles; i++)
         vehicles.push(new vehicle_1.vehicle());
+    // Hardcoded example
     vehicles[0].rides.push(1);
     vehicles[0].rides.push(0);
     vehicles[1].rides.push(2);
@@ -47,6 +46,9 @@
     function createOutput(vehicles) {
         if (!fs.existsSync("./output"))
             fs.mkdirSync("./output");
-        fs.writeFileSync("./output/" + OUTPUT_FILE.replace(/\..*$/, "") + ".out", vehicles.map(function (s) { return s.getRidesText(); }).join("\n"));
+        fs.writeFileSync("./output/" + OUTPUT_FILE.replace(/\..*$/, "") + ".out", vehicles.map(function (s) { return s.rides.length + " " + s.getRidesText(); }).join("\n"));
+    }
+    function getDistance(a, b) {
+        Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
     }
 });

@@ -2,6 +2,7 @@ var fs: any = require("fs");
 import { city } from "./models/city";
 import { ride } from "./models/ride";
 import { vehicle } from "./models/vehicle";
+import { coordinate } from "./models/coordinate";
 
 /*READING */
 var INPUT_FILE: string = process.argv[2];
@@ -32,16 +33,26 @@ for (var i = 0; i < rows.length; i++) {
         parseInt(d[5])))
 }
 
+<<<<<<< HEAD
 sortRidesByDistance(rides);
 
 //const data = rows.map(d => d.split("").map(e => e === "T"));
 //console.log(data);
+=======
+>>>>>>> 49bf3f641b95d049a6adca97a37579c7b2599340
 console.log("Data read and parsed in " + (-time + (time = Date.now())) + "ms");
 
 var vehicles: vehicle[] = [];
 for (var i = 0; i < theCity.numVehicles; i++)
     vehicles.push(new vehicle());
 
+<<<<<<< HEAD
+=======
+// Hardcoded example
+vehicles[0].rides.push(1);
+vehicles[0].rides.push(0);
+vehicles[1].rides.push(2);
+>>>>>>> 49bf3f641b95d049a6adca97a37579c7b2599340
 
 console.log("Creating output");
 time = Date.now();
@@ -54,10 +65,11 @@ function createOutput(vehicles: vehicle[]) {
         fs.mkdirSync(`./output`);
 
     fs.writeFileSync(`./output/${OUTPUT_FILE.replace(/\..*$/, "")}.out`,
-        vehicles.map(s => s.getRidesText()).join(`\n`)
+        vehicles.map(s => s.rides.length + " " + s.getRidesText()).join(`\n`)
     );
 }
 
+<<<<<<< HEAD
 function sortRidesByDistance(rides: ride[]) {
     rides.forEach(ride => {
         ride.distance = Math.abs(ride.start.x - ride.end.y) + Math.abs(ride.end.x - ride.end.y);
@@ -75,3 +87,8 @@ function sortRidesByDistance(rides: ride[]) {
     console.log(rides);
 }
 
+=======
+function getDistance(a: coordinate, b: coordinate){
+    Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
+}
+>>>>>>> 49bf3f641b95d049a6adca97a37579c7b2599340
