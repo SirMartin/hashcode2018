@@ -7,6 +7,7 @@ export class ride{
     earlyStart: number;
     latestFinish: number;
     distance: number = 0;
+    done: boolean = false;
 
     constructor(id:number, a:number,b:number,x:number,y:number,s:number,f:number){
         this.id = id;
