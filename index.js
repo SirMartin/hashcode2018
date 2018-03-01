@@ -1,0 +1,14 @@
+var fs = require("fs");
+var INPUT_FILE = process.argv[2];
+var OUTPUT_FILE = process.argv[2].replace(/^.*\//, "");
+console.log("Parsing " + INPUT_FILE + " file...");
+var time = Date.now();
+var fileData = fs.readFileSync(INPUT_FILE).toString();
+var rows = fileData.split(/\r?\n/g);
+var input = rows[0].split(/\s/g);
+console.log('hello');
+rows.splice(0, 1);
+rows.splice(rows.length - 1, 1);
+var data = rows.map(function (d) { return d.split("").map(function (e) { return e === "T"; }); });
+console.log(data);
+console.log("Data read and parsed in " + (-time + (time = Date.now())) + "ms");
