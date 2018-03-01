@@ -45,8 +45,13 @@ for (var i = 0; i < theCity.numVehicles; i++) {
     vehicles.push(new vehicle(i));
 }
 
+time = Date.now();
+console.log("Starting simulation");
+
 // Start simulation
 simulate(theCity, vehicles, rides);
+
+console.log("Simulation done " + (-time + (time = Date.now())) + "ms");
 
 console.log("Creating output");
 time = Date.now();
