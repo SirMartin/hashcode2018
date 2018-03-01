@@ -51,13 +51,19 @@ console.log("Starting simulation");
 // Start simulation
 simulate(theCity, vehicles, rides);
 
+let ridesNotRided = rides.filter(ride => {
+    return ride.done === false
+});
+
+console.log("RIDES NOT RIDED " + ridesNotRided.length);
+
 console.log("Simulation done in " + (-time + (time = Date.now())) + "ms");
 
 console.log("Creating output");
 time = Date.now();
 createOutput(vehicles);
 
-console.log("Output done in " + (-time + (time = Date.now())) + "ms");
+console.log("Output " + OUTPUT_FILE + " done in " + (-time + (time = Date.now())) + "ms");
 
 function createOutput(vehicles: vehicle[]) {
     if (!fs.existsSync(`./output`))
@@ -99,7 +105,7 @@ function getTheBestRide(position: coordinate, actualStep: number): ride {
     ridesToDo.forEach(ride => {
         const f = ride.getCost(position, actualStep);
         const b = ride.hasBonus(position, actualStep) ? theCity.bonusOnTime : 0;
-        arrRides.push(f - b);
+        arrRides.push(f + b);
     });
 
     var index = arrRides.indexOf(Math.min(...arrRides));
