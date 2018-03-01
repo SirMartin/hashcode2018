@@ -18,6 +18,7 @@ var input = rows[0].split(/\s/g);
 
 // Parsing the city
 var theCity: city = new city(parseInt(input[0]), parseInt(input[1]), parseInt(input[2]), parseInt(input[3]), parseInt(input[4]), parseInt(input[5]));
+console.log(theCity);
 rows.splice(0, 1);
 rows.splice(rows.length - 1, 1);
 
@@ -69,7 +70,6 @@ function createOutput(vehicles: vehicle[]) {
     );
 }
 
-<<<<<<< HEAD
 function sortRidesByDistance(rides: ride[]) {
     rides.forEach(ride => {
         ride.distance = Math.abs(ride.start.x - ride.end.y) + Math.abs(ride.end.x - ride.end.y);
@@ -87,8 +87,25 @@ function sortRidesByDistance(rides: ride[]) {
     console.log(rides);
 }
 
-=======
-function getDistance(a: coordinate, b: coordinate){
+function getDistance(a: coordinate, b: coordinate) {
     Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
 }
->>>>>>> 49bf3f641b95d049a6adca97a37579c7b2599340
+
+function getTheBestRide(position: coordinate): ride {
+    return null;
+}
+
+function simulate(theCity: city, vehicles: vehicle[], rides: ride[]) {
+    for (var i = 0; i < theCity.steps; i++) {
+        for (var j = 0; j < vehicles.length; j++) {
+            const v = vehicles[j];
+            if (v.isFree) {
+                var selectedRide = getTheBestRide(v.position);
+                v.setRide(selectedRide);
+            }
+
+            // Move each step.
+            v.move();
+        }
+    }
+}

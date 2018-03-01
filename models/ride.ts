@@ -15,4 +15,6 @@ export class ride{
         this.earlyStart = s;
         this.latestFinish = f;
     }
+
+    
 }
