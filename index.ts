@@ -32,6 +32,8 @@ for (var i = 0; i < rows.length; i++) {
         parseInt(d[5])))
 }
 
+sortRidesByDistance(rides);
+
 //const data = rows.map(d => d.split("").map(e => e === "T"));
 //console.log(data);
 console.log("Data read and parsed in " + (-time + (time = Date.now())) + "ms");
@@ -40,10 +42,6 @@ var vehicles: vehicle[] = [];
 for (var i = 0; i < theCity.numVehicles; i++)
     vehicles.push(new vehicle());
 
-
-vehicles[0].rides.push(1);
-vehicles[0].rides.push(0);
-vehicles[1].rides.push(2);
 
 console.log("Creating output");
 time = Date.now();
@@ -59,3 +57,21 @@ function createOutput(vehicles: vehicle[]) {
         vehicles.map(s => s.getRidesText()).join(`\n`)
     );
 }
+
+function sortRidesByDistance(rides: ride[]) {
+    rides.forEach(ride => {
+        ride.distance = Math.abs(ride.start.x - ride.end.y) + Math.abs(ride.end.x - ride.end.y);
+    });
+
+    rides.sort((a,b) => {
+        if(a.distance < b.distance) {
+            return -1;
+        } else if(a.distance > b.distance) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+    console.log(rides);
+}
+

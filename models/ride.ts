@@ -15,20 +15,4 @@ export class ride{
         this.earlyStart = s;
         this.latestFinish = f;
     }
-
-   public sortRidesByDistance(rides: ride[]) {
-        rides.forEach(ride => {
-            ride.distance = Math.abs(ride.start.x - ride.end.y) + Math.abs(ride.end.x - ride.end.y);
-        });
-    
-        rides.sort((a,b) => {
-            if(a.distance < b.distance) {
-                return -1;
-            } else if(a.distance > b.distance) {
-                return 1;
-            } else {
-                return 0;
-            }
-        });
-    }
 }
