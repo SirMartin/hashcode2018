@@ -2,7 +2,8 @@ const fs = require("fs");
 const Layers = require("./app/layers.js");
 const Solution = require("./app/slicer.js");
 const INPUT_FILE = process.argv[2];
-const OUTPUT_FILE = process.argv[2].replace(/^.*\//, "");
+const OUTPUT_FILE = process.argv[2].replace("input\\", "");
+console.log("test", process.argv[2].replace("input\\", ""));
 
 console.log(`Parsing ${ INPUT_FILE } file...`);
 
