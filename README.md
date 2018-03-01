@@ -14,4 +14,6 @@ E - high bonus: 21.465.200
 
 TOTAL: 47.997.101 points  
 
-Position: - Worldwide  
+Position:  
+372/4856 Worldwide  
+8/299 Spain  
