@@ -42,6 +42,7 @@ export class vehicle {
             this.rides.push(ride.id);
             this.destination = ride.end;
             this.isFree = false;
+            ride.done = true;
         }
     }
 

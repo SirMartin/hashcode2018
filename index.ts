@@ -34,26 +34,16 @@ for (var i = 0; i < rows.length; i++) {
         parseInt(d[5])))
 }
 
-<<<<<<< HEAD
 sortRidesByDistance(rides);
 
 //const data = rows.map(d => d.split("").map(e => e === "T"));
 //console.log(data);
-=======
->>>>>>> 49bf3f641b95d049a6adca97a37579c7b2599340
 console.log("Data read and parsed in " + (-time + (time = Date.now())) + "ms");
 
 var vehicles: vehicle[] = [];
 for (var i = 0; i < theCity.numVehicles; i++)
     vehicles.push(new vehicle());
 
-<<<<<<< HEAD
-=======
-// Hardcoded example
-vehicles[0].rides.push(1);
-vehicles[0].rides.push(0);
-vehicles[1].rides.push(2);
->>>>>>> 49bf3f641b95d049a6adca97a37579c7b2599340
 
 console.log("Creating output");
 time = Date.now();
@@ -84,15 +74,28 @@ function sortRidesByDistance(rides: ride[]) {
             return 0;
         }
     });
-    console.log(rides);
 }
 
 function getDistance(a: coordinate, b: coordinate) {
     Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
 }
 
-function getTheBestRide(position: coordinate): ride {
-    return null;
+function getTheBestRide(position: coordinate, actualStep: number): ride {
+    //Position es la position del coche
+
+    let ridesToDo = rides.filter(ride => {
+        ride.done === false && ((actualStep + ride.distance) <= ride.latestFinish)});
+    
+    let arrRides = [];
+    ridesToDo.forEach(ride => {
+        const f = ride.getCost(position, actualStep);
+        arrRides.push(f);
+    });
+    
+    var index = arrRides.indexOf(Math.min(...arrRides));
+    return ridesToDo[index];
+    
+    
 }
 
 function simulate(theCity: city, vehicles: vehicle[], rides: ride[]) {
@@ -100,7 +103,7 @@ function simulate(theCity: city, vehicles: vehicle[], rides: ride[]) {
         for (var j = 0; j < vehicles.length; j++) {
             const v = vehicles[j];
             if (v.isFree) {
-                var selectedRide = getTheBestRide(v.position);
+                var selectedRide = getTheBestRide(v.position, i);
                 v.setRide(selectedRide);
             }
 
