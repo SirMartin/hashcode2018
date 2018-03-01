@@ -17,15 +17,16 @@ var fileData: string = fs.readFileSync(INPUT_FILE).toString();
 var rows: string[] = fileData.split(/\r?\n/g);
 var input = rows[0].split(/\s/g);
 
+var vehiclesFinished = [];
+
 // Parsing the city
 var theCity: city = new city(parseInt(input[0]), parseInt(input[1]), parseInt(input[2]), parseInt(input[3]), parseInt(input[4]), parseInt(input[5]));
-console.log(theCity);
 rows.splice(0, 1);
 rows.splice(rows.length - 1, 1);
 
 const rides: ride[] = [];
 for (var i = 0; i < rows.length; i++) {
-    var d = rows[0].split(/\s/g);
+    var d = rows[i].split(/\s/g);
     rides.push(new ride(i,
         parseInt(d[0]),
         parseInt(d[1]),
@@ -96,7 +97,6 @@ function getTheBestRide(position: coordinate, actualStep: number): ride {
     });
 
     var index = arrRides.indexOf(Math.min(...arrRides));
-    console.log("index", index);
     return ridesToDo[index];
 }
 
@@ -104,12 +104,14 @@ function simulate(theCity: city, vehicles: vehicle[], rides: ride[]) {
     for (var i = 0; i < theCity.steps; i++) {
         for (var j = 0; j < vehicles.length; j++) {
             const v = vehicles[j];
-            if (v.isFree) {
-                console.log("COCHE " + j " LIBRE");
+            if (v.isFree && vehiclesFinished.indexOf(v.id) === -1) {
+                console.log("STEP " + i + " - COCHE " + j + " LIBRE");
                 var selectedRide = getTheBestRide(v.position, i);
                 if (selectedRide) {
-                    console.log("selectedRide", selectedRide);
                     v.setRide(selectedRide);
+                } else{
+                    // No hay mas viajes para ese coche.
+                    vehiclesFinished.push(v.id);
                 }
             }
 
